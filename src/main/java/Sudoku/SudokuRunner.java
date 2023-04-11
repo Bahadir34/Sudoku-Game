@@ -34,7 +34,6 @@ public class SudokuRunner
         }while(true);
     }
 
-
     public static int[][] initializeGame()
     {
         System.out.print("Difficulty Level (4 - 9): ");
@@ -82,71 +81,96 @@ public class SudokuRunner
     {
         boolean result = false;
 
-        //If the difficulty level has selected as 4, so The code will run this control blocks.
-        if(difficultyLevel == 4)
+        //These code bloc check that elements of raw and columns unique.
+        //This code block is used for both level 4 and 9.
+        int raw = 0 , column = 0;
+        for(int i = 0 ; i < board.length -1 ; i++)
         {
-            int sumOfColumns = 0 , sumOfRaws = 0;
-            int raw = 0 , column = 0;
-            for(int i = 0 ; i < board.length; i++)
+            for(int j = i + 1 ; j < board.length ; j++)
             {
-                sumOfRaws += board[raw][i];
-                sumOfColumns += board[i][column];
-
-                if(i == (board.length -1))
+                if((board[raw][i] != board[raw][j]) && (board[i][column] != board[j][column]))
                 {
-                    if(sumOfRaws == 10 && sumOfColumns == 10)
+                    result = true;
+                }
+            }
+            raw++;
+            column++;
+        }
+
+        if(result)
+        {
+            //If the difficulty level has selected as 4, so The code will run this control blocks.
+            if (difficultyLevel == 4)
+            {
+                int sumOfColumns = 0, sumOfRaws = 0;
+                raw = 0;
+                column = 0;
+                for (int i = 0; i < board.length; i++)
+                {
+                    sumOfRaws += board[raw][i];
+                    sumOfColumns += board[i][column];
+
+                    if (i == (board.length - 1))
                     {
-                        if(raw == 3 && column == 3)
+                        if (sumOfRaws == 10 && sumOfColumns == 10)
+                        {
+                            if (raw == 3 && column == 3)
+                                break;
+
+                            result = true;
+                            i = -1;
+                            raw++;
+                            column++;
+                            sumOfColumns = 0;
+                            sumOfRaws = 0;
+                        }
+                        else
+                        {
+                            result = false;
                             break;
+                        }
 
-                        result = true;
-                        i = -1;
-                        raw++;
-                        column++;
-                        sumOfColumns = 0;
-                        sumOfRaws = 0;
-                    }
-
-                    else
-                    {
-                        result = false;
-                        break;
                     }
 
                 }
-
             }
-        }
 
-        //If the difficulty level has selected as 9, so The code will run this control blocks.
-        else
-        {
-            int sumOfColumns = 0 , sumOfRaws = 0;
-            int raw = 0 , column = 0;
-            for(int i = 0 ; i <board.length ; i++)
+            //If the difficulty level has selected as 9, so The code will run this control blocks.
+            else
             {
-                sumOfRaws+= board[raw][i];
-
-                if(i == (board.length -1))
+                int sumOfColumns = 0, sumOfRaws = 0;
+                raw = 0;
+                column = 0;
+                for (int i = 0; i < board.length; i++)
                 {
-                    if(sumOfColumns == 10)
-                    {
-                        result = true;
-                        i = 0;
-                        raw++;
-                        sumOfRaws = 0;
-                    }
+                    sumOfRaws += board[raw][i];
+                    sumOfColumns += board[i][column];
 
-                    else
+                    if (i == (board.length - 1))
                     {
-                        result = false;
-                        break;
+                        if (sumOfRaws == 45 && sumOfColumns == 45)
+                        {
+                            if (raw == 8 && column == 8)
+                                break;
+
+                            result = true;
+                            i = -1;
+                            raw++;
+                            column++;
+                            sumOfColumns = 0;
+                            sumOfRaws = 0;
+                        }
+                        else
+                        {
+                            result = false;
+                            break;
+                        }
+
                     }
 
                 }
             }
         }
-
         return result;
     }
 }
