@@ -4,7 +4,7 @@ public class GameBoard
 {
     int[][] gameBoard;
 
-    // merhaba cbhd
+    // merhaba cbhd fnjdf
     public GameBoard(int dimensionNumber)
     {
         this.gameBoard = new int[dimensionNumber][dimensionNumber];
